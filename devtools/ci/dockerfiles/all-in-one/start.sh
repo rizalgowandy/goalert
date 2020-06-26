@@ -8,7 +8,8 @@ then
   mkdir -p ${PGDATA} /run/postgresql /var/log/postgresql
   chown postgres ${PGDATA} /run/postgresql /var/log/postgresql
   su postgres -s /bin/sh -c "initdb $PGDATA"
-  sed -i "s/^listen_addresses.*/listen_addresses = ''/" $PGDATA/postgresql.conf
+  sed -i '/^listen_addresses/d' $PGDATA/postgresql.conf
+  echo "listen_addresses = ''" >> $PGDATA/postgresql.conf
   echo "fsync = off" >> $PGDATA/postgresql.conf
   echo "full_page_writes = off" >> $PGDATA/postgresql.conf
   touch /init-db
