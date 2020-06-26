@@ -5,12 +5,11 @@ export PGDATA=/var/lib/postgresql/data PGUSER=postgres DB_URL=postgresql://postg
 
 if ! test -f /init-db
 then
-  mkdir -p ${PGDATA} /run/postgresql /var/log/postgresql &&\
-  chown postgres ${PGDATA} /run/postgresql /var/log/postgresql &&\
-  su postgres -s /bin/sh -c "initdb $PGDATA" &&\
-  echo "host all  all    0.0.0.0/0  md5" >> $PGDATA/pg_hba.conf &&\
-  echo "listen_addresses='*'" >> $PGDATA/postgresql.conf &&\
-  echo "fsync = off" >> $PGDATA/postgresql.conf &&\
+  mkdir -p ${PGDATA} /run/postgresql /var/log/postgresql
+  chown postgres ${PGDATA} /run/postgresql /var/log/postgresql
+  su postgres -s /bin/sh -c "initdb $PGDATA"
+  sed -i "s/^listen_addresses.*/listen_addresses = ''/" $PGDATA/postgresql.conf
+  echo "fsync = off" >> $PGDATA/postgresql.conf
   echo "full_page_writes = off" >> $PGDATA/postgresql.conf
   touch /init-db
 fi
