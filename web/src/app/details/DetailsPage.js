@@ -18,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Markdown from '../util/Markdown'
 import { AppLink } from '../util/AppLink'
 import useWidth from '../util/useWidth'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 function isDesktopMode(width) {
   return width === 'md' || width === 'lg' || width === 'xl'
@@ -25,6 +26,9 @@ function isDesktopMode(width) {
 
 const useLinkStyles = makeStyles(() => statusStyles)
 const useStyles = makeStyles((theme) => ({
+  alertMessage: {
+    width: '100%',
+  },
   spacing: {
     '&:not(:first-child)': {
       marginTop: 8,
@@ -130,6 +134,13 @@ export default function DetailsPage(props) {
 
   return (
     <Grid container>
+      <Grid item xs={12} className={classes.spacing}>
+        <Alert severity='warning' classes={{ message: classes.alertMessage }}>
+          <AlertTitle>Warning</AlertTitle>
+          This escalation policy is not assigned to a service. Visit your
+          service and assign this escalation policy to it to receive alerts.
+        </Alert>
+      </Grid>
       <Grid item xs={12} className={classes.spacing}>
         <Card>
           <CardContent>
