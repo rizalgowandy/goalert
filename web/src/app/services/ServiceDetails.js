@@ -105,6 +105,11 @@ export default function ServiceDetails({ serviceID }) {
       <DetailsPage
         title={data.service.name}
         details={data.service.description}
+        alert={{
+          type: 'error',
+          title: 'Over 200 unacknowledged alerts',
+          message: `Incoming alerts will be supressed until some alerts are closed.`,
+        }}
         titleFooter={
           <div>
             Escalation Policy:{' '}

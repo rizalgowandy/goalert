@@ -19,6 +19,7 @@ import Markdown from '../util/Markdown'
 import { AppLink } from '../util/AppLink'
 import useWidth from '../util/useWidth'
 import { Alert, AlertTitle } from '@material-ui/lab'
+import { toTitleCase } from '../util/toTitleCase'
 
 function isDesktopMode(width) {
   return width === 'md' || width === 'lg' || width === 'xl'
@@ -98,13 +99,18 @@ DetailsLink.propTypes = {
   url: p.string.isRequired,
   status: p.oneOf(['ok', 'warn', 'err']),
   subText: p.node,
+  alert: p.shape({
+    type: p.oneOf(['warning', 'error']).isRequired,
+    title: p.string.isRequired,
+    message: p.string.isRequired,
+  }),
 }
 
 export default function DetailsPage(props) {
   const classes = useStyles()
   const width = useWidth()
 
-  const { title, details, icon, titleFooter, pageFooter } = props
+  const { alert, title, details, icon, titleFooter, pageFooter } = props
 
   let links = null
   if (props.links && props.links.length) {
@@ -134,13 +140,19 @@ export default function DetailsPage(props) {
 
   return (
     <Grid container>
-      <Grid item xs={12} className={classes.spacing}>
-        <Alert severity='warning' classes={{ message: classes.alertMessage }}>
-          <AlertTitle>Warning</AlertTitle>
-          This escalation policy is not assigned to a service. Visit your
-          service and assign this escalation policy to it to receive alerts.
-        </Alert>
-      </Grid>
+      {alert && (
+        <Grid item xs={12} className={classes.spacing}>
+          <Alert
+            severity={alert.type}
+            classes={{ message: classes.alertMessage }}
+          >
+            <AlertTitle>
+              {toTitleCase(alert.type)}: {alert.title}
+            </AlertTitle>
+            {alert.message}
+          </Alert>
+        </Grid>
+      )}
       <Grid item xs={12} className={classes.spacing}>
         <Card>
           <CardContent>

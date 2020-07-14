@@ -153,6 +153,11 @@ export default function UserDetails(props) {
       <DetailsPage
         title={user.name + (svcCount ? ' (On-Call)' : '')}
         details={user.email}
+        alert={{
+          type: 'error',
+          title: 'No notification rules set',
+          message: `To receive alerts, you must have at least one notification rule.`,
+        }}
         icon={
           <React.Fragment>
             <UserAvatar

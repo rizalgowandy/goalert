@@ -112,6 +112,11 @@ export default function ScheduleDetails({ scheduleID }) {
       <DetailsPage
         title={data.name}
         details={data.description}
+        alert={{
+          type: 'warning',
+          title: 'Not assigned to an escalation policy',
+          message: `To receive alerts for this configuration, visit your escalation policy and assign this schedule to a step.`,
+        }}
         titleFooter={
           <Grid container spacing={2}>
             <Grid item xs={12}>

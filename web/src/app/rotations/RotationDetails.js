@@ -91,6 +91,11 @@ export default function RotationDetails({ rotationID }) {
       <DetailsPage
         title={data.name}
         details={data.description}
+        alert={{
+          type: 'warning',
+          title: 'Not assigned to a schedule or escalation policy',
+          message: `To receive alerts for this configuration, visit your schedule or escalation policy and add this rotation as an assignment or step.`,
+        }}
         titleFooter={handoffSummary(data)}
         pageFooter={<RotationUserList rotationID={rotationID} />}
       />

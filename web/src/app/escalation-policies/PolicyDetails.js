@@ -73,6 +73,11 @@ export default function PolicyDetails(props) {
       <DetailsPage
         title={data.name}
         details={data.description}
+        alert={{
+          type: 'warning',
+          title: 'Not assigned to a service',
+          message: `To receive alerts for this configuration, visit your service and assign this escalation policy.`,
+        }}
         links={[
           {
             label: 'Services',
