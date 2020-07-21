@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import p from 'prop-types'
 import gql from 'graphql-tag'
 import DetailsPage from '../details/DetailsPage'
-import StatusUpdateNotification from './UserStatusUpdatePreference'
 import { UserAvatar } from '../util/avatars'
 import UserContactMethodList from './UserContactMethodList'
 import { AddAlarm, SettingsPhone } from '@material-ui/icons'
@@ -168,11 +167,6 @@ export default function UserDetails(props) {
           </React.Fragment>
         }
         links={links}
-        titleFooter={
-          props.readOnly ? null : (
-            <StatusUpdateNotification userID={props.userID} />
-          )
-        }
         pageFooter={
           <Grid container spacing={2}>
             <UserContactMethodList

@@ -29,6 +29,7 @@ import { authLogout } from '../../actions'
 import { connect } from 'react-redux'
 import RequireConfig, { Config } from '../../util/RequireConfig'
 import NavSubMenu from './NavSubMenu'
+import SettingsDialog from '../SettingsDialog'
 
 import logo from '../../public/goalert-alt-logo-scaled.png'
 import { AppLink } from '../../util/AppLink'
@@ -81,6 +82,10 @@ export default class SideBarDrawerList extends React.PureComponent {
     classes: p.object.isRequired,
   }
 
+  state = {
+    showSettingsDialog: false,
+  }
+
   renderSidebarLink = (icon, path, label, props = {}) => {
     return (
       <AppLink to={path} className={this.props.classes.nav} {...props}>
@@ -102,9 +107,9 @@ export default class SideBarDrawerList extends React.PureComponent {
     )
   }
 
-  renderSidebarItem = (IconComponent, label) => {
+  renderSidebarItem = (IconComponent, label, listItemProps) => {
     return (
-      <ListItem button tabIndex={-1}>
+      <ListItem button tabIndex={-1} {...listItemProps}>
         <ListItemIcon>
           <IconComponent className={this.props.classes.navIcon} />
         </ListItemIcon>
@@ -217,6 +222,13 @@ export default class SideBarDrawerList extends React.PureComponent {
               },
             },
           )}
+          {this.renderSidebarItem(AdminIcon, 'Settings', {
+            onClick: () => this.setState({ showSettingsDialog: true }),
+          })}
+          <SettingsDialog
+            open={this.state.showSettingsDialog}
+            onClose={() => this.setState({ showSettingsDialog: false })}
+          />
           {this.renderSidebarNavLink(CurrentUserAvatar, '/profile', 'Profile')}
         </List>
       </React.Fragment>
